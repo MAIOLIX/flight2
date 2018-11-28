@@ -15,10 +15,11 @@
     "cookie-parser": "^1.4.0",
     "debug": "^2.2.0",
     "express": "^4.14.0",
+    "jshint": "^2.9.6",
     "morgan": "^1.7.0",
     "node-rest-client": "^3.1.0",
     "pug": "^2.0.0-beta6",
-    "request": "^2.81.0",
+    "request": "^2.88.0",
     "serve-favicon": "^2.3.0",
     "unirest": "^0.5.1"
   }
