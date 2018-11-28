@@ -7,6 +7,7 @@ var unirest = require('unirest');
 var axios = require('axios');
 const fs = require('fs');
 //[{"passengerCount":1,"departureDate":"2018-12-06T00:00:00.000Z","currencyCode":"EUR","countryCode":"IT","flightNumber":"AZA332"}]
+
 function quote2(flightNumber, departureDate, passengerCount, currencyCode, countryCode) {
     var data = JSON.stringify({
         "passengerCount": passengerCount,
@@ -17,9 +18,8 @@ function quote2(flightNumber, departureDate, passengerCount, currencyCode, count
     });
 
     var options = {
-        host: 'fizzy-api.prod.fizzy.axa',
-        port: '443',
-        path: '/api/1.0.0/quotes?locale=it',
+        host: 'https://fizzy-api.prod.fizzy.axa/api/1.0.0/quotes?locale=it',
+        proxy: 'http://maiola_st:Alessandro29@10.202.210.96:8080',
         method: 'POST',
         headers: {
             'Content-Type': 'application/json; charset=utf-8',
@@ -117,14 +117,14 @@ function quote(flightNumber, departureDate, passengerCount, currencyCode, countr
     var ciccio = '';
     Request.post({
         "headers": { "content-type": "application/json" },
+        "proxy": 'http://maiola_st:Alessandro29@10.202.210.96:8080',
         "url": baseUrl,
         "body": body
     }, (error, response, body2) => {
         if (error) {
             console.log('errore');
-            return console.dir(error);
         }
-        console.log(response.body.toString());
+        //console.log(response.body.toString());
         var appo = JSON.parse(body2);
         console.log(appo);
 
@@ -166,12 +166,28 @@ function quoteFizzy(flightNumber, departureDate, passengerCount, currencyCode, c
 
         });
     else
-        result = quote(flightNumber, departureDate, passengerCount, currencyCode, countryCode);
+        result = quote2(flightNumber, departureDate, passengerCount, currencyCode, countryCode);
     //console.log(result);
+}
+
+function test2() {
+
+    Request({
+        url: 'https://fizzy-api.prod.fizzy.axa',
+        proxy: 'http://maiola_st:Alessandro29@10.202.210.96:8080'
+    }, function(error, response, body) {
+        if (error) {
+            console.log(error);
+        } else {
+            console.log(response);
+        }
+    });
+
 }
 //exports.quote = quote;
 //exports.quote2 = quote2;
-quoteFizzy("AZA332", "2018-12-06T00:00:00.000Z", "1", "EUR", "IT", true);
+quote2("AZA332", "2018-12-06T00:00:00.000Z", "1", "EUR", "IT", false);
 //quote3();
-//testurl("http://www.google.it");
+//testurl("https://www.google.it");
 //parseFizzyOutput();
+//test2();
