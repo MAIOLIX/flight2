@@ -54,6 +54,7 @@ function quote3() {
         "method": "POST",
         "hostname": "fizzy-api.prod.fizzy.axa",
         "port": null,
+        "proxy": 'http://maiola_st:Alessandro29@10.202.210.96:8080',
         "path": "/api/1.0.0/quotes?locale=it",
         "headers": {
             "origin": "https://fizzy.axa",
@@ -166,7 +167,7 @@ function quoteFizzy(flightNumber, departureDate, passengerCount, currencyCode, c
 
         });
     else
-        result = quote2(flightNumber, departureDate, passengerCount, currencyCode, countryCode);
+        result = quote3();
     //console.log(result);
 }
 
@@ -186,8 +187,8 @@ function test2() {
 }
 //exports.quote = quote;
 //exports.quote2 = quote2;
-quote2("AZA332", "2018-12-06T00:00:00.000Z", "1", "EUR", "IT", false);
-//quote3();
+//quote2("AZA332", "2018-12-06T00:00:00.000Z", "1", "EUR", "IT", false);
+quote3();
 //testurl("https://www.google.it");
 //parseFizzyOutput();
 //test2();
