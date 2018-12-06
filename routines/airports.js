@@ -12,10 +12,43 @@ function loadAirports(airportCodes, airportNames) {
     })
 }
 
+function loadMapForCity(airportMap) {
+    //var app = {};
+    //airportMap = app;
+    fs.readFile('./datas/airports.json', (err, data) => {
+        if (err) throw err;
+        var airportObj = JSON.parse(data);
+        airportObj.airports.forEach(item => {
+            var keyApp = item.city + '-' + item.countryCode;
+            var airportsForCity = airportMap[keyApp];
+            //var countryCode = item.countryCode;
+            if (item.iata != undefined) {
+                var appObj = {};
+                appObj['descrizione'] = item.name;
+                appObj['iata'] = item.iata;
+                if (airportsForCity == null) {
+
+                    airportsForCity = [];
+                    airportsForCity.push(appObj);
+                    airportMap[keyApp] = airportsForCity;
+
+
+                } else {
+                    //console.log('aggiungo');
+                    airportsForCity.push(appObj);
+                }
+            }
+
+        });
+    })
+
+}
+
+
 function searchAirports(nome, airportCodes, airportNames) {
     nome = nome.toString().toLowerCase();
-    let matches = airportNames.filter(s => s.includes(nome));
-    let indexCode = airportNames.indexOf(matches.toString());
+    var matches = airportNames.filter(s => s.includes(nome));
+    var indexCode = airportNames.indexOf(matches.toString());
     appo = airportCodes[indexCode];
     return appo;
 }
@@ -23,6 +56,8 @@ function searchAirports(nome, airportCodes, airportNames) {
 
 //https://translate.googleapis.com/translate_a/single?client=gtx&sl=it&tl=en&dt=t&q=Londra
 
+
 exports.loadAirports = loadAirports;
 exports.searchAirports = searchAirports;
+exports.loadMapForCity = loadMapForCity;
 //module.exports = loadAirports, searchAirports;

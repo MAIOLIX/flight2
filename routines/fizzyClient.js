@@ -188,7 +188,7 @@ function test2() {
 //exports.quote = quote;
 //exports.quote2 = quote2;
 //quote2("AZA332", "2018-12-06T00:00:00.000Z", "1", "EUR", "IT", false);
-quote3();
+//quote3();
 //testurl("https://www.google.it");
 //parseFizzyOutput();
 //test2();
