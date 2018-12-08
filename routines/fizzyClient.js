@@ -8,53 +8,12 @@ var axios = require('axios');
 const fs = require('fs');
 //[{"passengerCount":1,"departureDate":"2018-12-06T00:00:00.000Z","currencyCode":"EUR","countryCode":"IT","flightNumber":"AZA332"}]
 
-function quote2(flightNumber, departureDate, passengerCount, currencyCode, countryCode) {
-    var data = JSON.stringify({
-        "passengerCount": passengerCount,
-        "departureDate": departureDate,
-        "currencyCode": currencyCode,
-        "countryCode": countryCode,
-        "flightNumber": flightNumber
-    });
-
-    var options = {
-        host: 'https://fizzy-api.prod.fizzy.axa/api/1.0.0/quotes?locale=it',
-        proxy: 'http://maiola_st:Alessandro29@10.202.210.96:8080',
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json; charset=utf-8',
-            'Content-Length': data.length
-        }
-    };
-
-    var req = https.request(options, function(res) {
-        var msg = '';
-
-        res.setEncoding('utf8');
-        console.log(res.data);
-        res.on('data', function(chunk) {
-            console.log(chunk[2]);
-            msg += chunk;
-        });
-        res.on('end', function() {
-            console.log('ciao');
-            //console.log(JSON.parse(msg));
-        });
-    });
-
-    req.write(data);
-    req.end();
-
-
-}
-
-function quote3() {
+function quote3(flightNumber, departureDate, passengerCount, currencyCode, countryCode) {
 
     var options = {
         "method": "POST",
         "hostname": "fizzy-api.prod.fizzy.axa",
         "port": null,
-        "proxy": 'http://maiola_st:Alessandro29@10.202.210.96:8080',
         "path": "/api/1.0.0/quotes?locale=it",
         "headers": {
             "origin": "https://fizzy.axa",
@@ -84,11 +43,11 @@ function quote3() {
     });
 
     req.write(JSON.stringify([{
-        passengerCount: 1,
-        departureDate: '2018-12-06T00:00:00.000Z',
-        currencyCode: 'EUR',
-        countryCode: 'IT',
-        flightNumber: 'AZA332'
+        passengerCount: passengerCount,
+        departureDate: departureDate,
+        currencyCode: currencyCode,
+        countryCode: countryCode,
+        flightNumber: flightNumber
     }]));
     req.end();
 }
@@ -102,39 +61,6 @@ function testurl(myUrl) {
             console.log(error);
         });
 }
-
-
-
-function quote(flightNumber, departureDate, passengerCount, currencyCode, countryCode) {
-    var baseUrl = "https://fizzy-api.prod.fizzy.axa/api/1.0.0/quotes?locale=it";
-    var body = JSON.stringify({
-        "passengerCount": passengerCount,
-        "departureDate": departureDate,
-        "currencyCode": currencyCode,
-        "countryCode": countryCode,
-        "flightNumber": flightNumber
-    });
-    console.log(body);
-    var ciccio = '';
-    Request.post({
-        "headers": { "content-type": "application/json" },
-        "proxy": 'http://maiola_st:Alessandro29@10.202.210.96:8080',
-        "url": baseUrl,
-        "body": body
-    }, (error, response, body2) => {
-        if (error) {
-            console.log('errore');
-        }
-        //console.log(response.body.toString());
-        var appo = JSON.parse(body2);
-        console.log(appo);
-
-        console.log(ciccio);
-        //console.log(body);
-        //console.dir(JSON.parse(body));
-    });
-}
-
 function quoteMock(callback) {
     var result;
     fs.readFile('../datas/resultFizzy.json', (err, data) => {
@@ -142,13 +68,6 @@ function quoteMock(callback) {
         var airportObj = JSON.parse(data);
         result = airportObj;
         airportObj.forEach(item => {
-            //console.log(item.primeAmount);
-            //console.log(item.compensationAmount);
-            //result = callback(result);
-            //return result;
-            //airportCodes.push(item.fs);
-            //airportNames.push(item.name.toString().toLowerCase());
-
         });
         result = callback(result);
         return result;
@@ -167,24 +86,11 @@ function quoteFizzy(flightNumber, departureDate, passengerCount, currencyCode, c
 
         });
     else
-        result = quote3();
+        result = quote3(flightNumber, departureDate, passengerCount, currencyCode, countryCode);
     //console.log(result);
 }
 
-function test2() {
-
-    Request({
-        url: 'https://fizzy-api.prod.fizzy.axa',
-        proxy: 'http://maiola_st:Alessandro29@10.202.210.96:8080'
-    }, function(error, response, body) {
-        if (error) {
-            console.log(error);
-        } else {
-            console.log(response);
-        }
-    });
-
-}
+quoteFizzy("AZA332", "2018-12-06T00:00:00.000Z", "1", "EUR", "IT",true);
 //exports.quote = quote;
 //exports.quote2 = quote2;
 //quote2("AZA332", "2018-12-06T00:00:00.000Z", "1", "EUR", "IT", false);
