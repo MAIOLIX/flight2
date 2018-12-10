@@ -1,0 +1,11 @@
+{
+  "version": "0.2.1",
+  "defaults": {},
+  "configurations": [
+    {
+      "type": "default",
+      "project": "routines\\airports.js",
+      "name": "airports.js"
+    }
+  ]
+}

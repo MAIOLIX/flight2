@@ -63,7 +63,7 @@ function testurl(myUrl) {
 }
 function quoteMock(callback) {
     var result;
-    fs.readFile('../datas/resultFizzy.json', (err, data) => {
+    fs.readFile('./datas/resultFizzy.json', (err, data) => {
         if (err) throw err;
         var airportObj = JSON.parse(data);
         result = airportObj;
@@ -90,7 +90,7 @@ function quoteFizzy(flightNumber, departureDate, passengerCount, currencyCode, c
     //console.log(result);
 }
 
-quoteFizzy("AZA332", "2018-12-06T00:00:00.000Z", "1", "EUR", "IT",true);
+//quoteFizzy("AZA332", "2018-12-06T00:00:00.000Z", "1", "EUR", "IT",true);
 //exports.quote = quote;
 //exports.quote2 = quote2;
 //quote2("AZA332", "2018-12-06T00:00:00.000Z", "1", "EUR", "IT", false);
